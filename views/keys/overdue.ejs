@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просроченные ключи | Система контроля ключей МТС</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'MTSWide';
+            src: url('/fonts/Wide/MTSWide-Bold.otf') format('opentype');
+            font-weight: 700;
+        }
+        @font-face {
+            font-family: 'MTSCompact';
+            src: url('/fonts/Compact/MTSCompact-Regular.otf') format('opentype');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'MTSCompact';
+            src: url('/fonts/Compact/MTSCompact-Medium.otf') format('opentype');
+            font-weight: 500;
+        }
+        @font-face {
+            font-family: 'MTSText';
+            src: url('/fonts/Text/MTSText-Regular.otf') format('opentype');
+            font-weight: 400;
+        }
+
+        :root {
+            --color-brand-mts-red: #ff0032;
+            --color-text-primary: #1d2023;
+            --color-background-primary: #ffffff;
+            --color-background-secondary: #f2f3f7;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'MTSText', 'Segoe UI', Arial, sans-serif; background-color: var(--color-background-secondary); }
+
+        .mts-header { background-color: #1d2023; padding: 0.8rem 2rem; }
+        .mts-header .navbar-brand { font-family: 'MTSWide', sans-serif; font-weight: 700; font-size: 1.3rem; display: flex; align-items: center; gap: 12px; color: white; text-decoration: none; }
+        .mts-logo { height: 32px; width: auto; }
+        .company-name { font-size: 12px; color: var(--color-brand-mts-red); font-family: 'MTSCompact', sans-serif; }
+
+        .mts-sidebar { background: #1d2023; min-height: calc(100vh - 70px); padding: 25px 0; }
+        .sidebar-menu { list-style: none; padding: 0; margin: 0; }
+        .sidebar-menu li { margin-bottom: 5px; }
+        .sidebar-menu a { display: block; padding: 12px 25px; color: #e0e0e0; text-decoration: none; font-family: 'MTSCompact', sans-serif; font-size: 14px; font-weight: 500; }
+        .sidebar-menu a:hover { background: rgba(255, 0, 50, 0.1); color: white; }
+        .sidebar-menu .active a { background: var(--color-brand-mts-red); color: white; }
+        .sidebar-divider { height: 1px; background: #333; margin: 15px 25px; }
+        .sidebar-title { font-size: 11px; text-transform: uppercase; color: #888; padding: 10px 25px; font-family: 'MTSCompact', sans-serif; }
+
+        .mts-content { padding: 25px 30px; }
+        .page-title { font-family: 'MTSWide', sans-serif; font-weight: 700; font-size: 28px; color: var(--color-text-primary); margin-bottom: 20px; padding-bottom: 15px; border-bottom: 3px solid var(--color-brand-mts-red); display: inline-block; }
+
+        .mts-card { background: var(--color-background-primary); border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); border: none; margin-bottom: 20px; }
+        .mts-card .card-header { background: var(--color-background-primary); border-bottom: 1px solid #e9ecef; padding: 18px 24px; font-family: 'MTSWide', sans-serif; font-weight: 600; font-size: 18px; border-radius: 16px 16px 0 0; }
+
+        .btn-mts-primary { background: var(--color-brand-mts-red); border: none; color: white; padding: 8px 24px; border-radius: 8px; font-family: 'MTSCompact', sans-serif; font-weight: 500; }
+        .btn-mts-primary:hover { background: #cc0028; }
+
+        .status-overdue { color: var(--color-brand-mts-red); font-weight: 600; }
+
+        .fa, .fas, .far, .fab, i[class*="fa-"] { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="mts-header">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/keys/dashboard">
+                    <img src="https://static.mts.ru/mts_rf/images/logo-eco.svg" alt="МТС" class="mts-logo">
+                    <div>Система контроля ключей<div class="company-name">ПАО «МТС»</div></div>
+                </a>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="text-light"><i class="fas fa-user-circle"></i> <strong><%= user.username %></strong> <span class="badge bg-light text-dark ms-2"><%= user.role %></span></span>
+                    <form action="/logout" method="post" class="d-inline"><button type="submit" class="btn btn-outline-light btn-sm"><i class="fas fa-sign-out-alt"></i> Выйти</button></form>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 mts-sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="/keys/dashboard"><i class="fas fa-tachometer-alt"></i> Дашборд</a></li>
+                    <% if (user.role === 'Администратор') { %>
+                        <li><a href="/keys/issue"><i class="fas fa-sign-out-alt"></i> Выдача ключа</a></li>
+                        <li><a href="/keys/return"><i class="fas fa-sign-in-alt"></i> Возврат ключа</a></li>
+                    <% } %>
+                    <% if (user.role === 'Администратор' || user.role === 'Руководитель') { %>
+                        <li class="active"><a href="/keys/overdue"><i class="fas fa-exclamation-triangle"></i> Просроченные ключи</a></li>
+                        <li><a href="/keys/employee-history"><i class="fas fa-history"></i> История сотрудника</a></li>
+                    <% } %>
+                    <% if (user.role === 'Администратор') { %>
+                        <div class="sidebar-divider"></div>
+                        <div class="sidebar-title">Администрирование</div>
+                        <li><a href="/stations"><i class="fas fa-tower-cell"></i> Базовые станции</a></li>
+                        <li><a href="/users"><i class="fas fa-users"></i> Пользователи и роли</a></li>
+                    <% } %>
+                    <% if (user.role === 'Администратор' || user.role === 'Аудитор') { %>
+                        <li><a href="/audit"><i class="fas fa-clipboard-list"></i> Журнал аудита</a></li>
+                    <% } %>
+                </ul>
+            </div>
+            <div class="col-md-10">
+                <div class="mts-content">
+                    <h1 class="page-title">Просроченные ключи</h1>
+                    <div class="card mts-card">
+                        <div class="card-header">Список просроченных ключей</div>
+                        <div class="card-body">
+                            <% if (overdueIssues && overdueIssues.length > 0) { %>
+                                <div class="table-responsive">
+                                    <table class="table mts-table">
+                                        <thead>
+                                            <tr>
+                                                <th>№ ключа</th><th>БС</th><th>Кто получил</th><th>Кто выдал</th>
+                                                <th>Дата выдачи</th><th>Плановая дата</th><th>Просрочено дней</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% overdueIssues.forEach(function(issue) { 
+                                                var days = Math.floor((new Date() - new Date(issue.plannedReturnDate)) / (1000 * 60 * 60 * 24));
+                                            %>
+                                                <tr>
+                                                    <td><strong><%= issue.Key ? issue.Key.number : 'Н/Д' %></strong></td>
+                                                    <td><%= issue.Key && issue.Key.BaseStation ? issue.Key.BaseStation.number : 'Н/Д' %></td>
+                                                    <td><%= issue.receivedBy || 'Н/Д' %></td>
+                                                    <td><%= issue.issuedBy || 'Н/Д' %></td>
+                                                    <td><%= issue.issueDate ? new Date(issue.issueDate).toLocaleDateString() : 'Н/Д' %></td>
+                                                    <td class="text-danger"><%= issue.plannedReturnDate ? new Date(issue.plannedReturnDate).toLocaleDateString() : 'Н/Д' %></td>
+                                                    <td><span class="badge bg-danger"><%= days %></span></td>
+                                                </tr>
+                                            <% }); %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <% } else { %>
+                                <div class="text-center py-5">Нет просроченных ключей</div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
