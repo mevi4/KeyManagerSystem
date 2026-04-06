@@ -40,12 +40,14 @@ const keyRoutes = require('./routes/keys');
 const stationRoutes = require('./routes/stations');
 const userRoutes = require('./routes/users');
 const auditRoutes = require('./routes/audit');
+const keyManagementRoutes = require('./routes/keyManagement');
 
 app.use('/', authRoutes);
 app.use('/keys', keyRoutes);
 app.use('/stations', stationRoutes);
 app.use('/users', userRoutes);
 app.use('/audit', auditRoutes);
+app.use('/keyManagement', keyManagementRoutes);
 
 // Запуск сервера
 app.listen(PORT, () => {

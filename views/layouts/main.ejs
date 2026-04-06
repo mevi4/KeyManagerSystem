@@ -34,6 +34,13 @@
                         <li class="<%= activePage === 'issue' ? 'active' : '' %>"><a href="/keys/issue">Выдача ключа</a></li>
                         <li class="<%= activePage === 'return' ? 'active' : '' %>"><a href="/keys/return">Возврат ключа</a></li>
                     <% } %>
+                    <% if (user.role === 'Администратор') { %>
+                        <div class="sidebar-divider"></div>
+                        <div class="sidebar-title">Администрирование</div>
+                        <li><a href="/stations"><i class="fas fa-tower-cell"></i> Базовые станции</a></li>
+                        <li><a href="/keyManagement"><i class="fas fa-key"></i> Управление ключами</a></li>  <!-- ЭТА СТРОКА -->
+                        <li><a href="/users"><i class="fas fa-users"></i> Пользователи и роли</a></li>
+                    <% } %>
                     <% if (user.role === 'Администратор' || user.role === 'Руководитель') { %>
                         <li class="<%= activePage === 'overdue' ? 'active' : '' %>"><a href="/keys/overdue">Просроченные ключи</a></li>
                         <li class="<%= activePage === 'employee-history' ? 'active' : '' %>"><a href="/keys/employee-history">История сотрудника</a></li>

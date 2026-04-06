@@ -42,12 +42,23 @@ router.get('/create', authMiddleware, adminMiddleware, (req, res) => {
     res.render('stations/create', { user: req.session.user });
 });
 
-// Создание
+// Создание БС + автоматическое создание ключа
 router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
     const { number, address } = req.body;
     
     try {
-        await BaseStation.create({ number, address });
+        // 1. Создаём базовую станцию
+        const station = await BaseStation.create({ number, address });
+        
+        // 2. Автоматически создаём ключ для этой БС
+        const keyNumber = `KEY-${station.id}`;
+        await Key.create({
+            number: keyNumber,
+            baseStationId: station.id,
+            status: 'доступен'
+        });
+        
+        console.log(`Создана БС ${number} и ключ ${keyNumber}`);
         res.redirect('/stations');
     } catch (error) {
         console.error('Ошибка:', error.message);
