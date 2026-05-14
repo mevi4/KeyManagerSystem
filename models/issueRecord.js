@@ -13,12 +13,22 @@ module.exports = (sequelize, DataTypes) => {
         issuedBy: {
             type: DataTypes.STRING,
             allowNull: false,
-            field: 'issued_by'
+            field: 'issued_by'   // ← имя в БД
         },
         receivedBy: {
             type: DataTypes.STRING,
             allowNull: false,
-            field: 'received_by'
+            field: 'received_by'  // ← имя в БД
+        },
+        phone: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            field: 'phone'
+        },
+        organization: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            field: 'organization'
         },
         issueDate: {
             type: DataTypes.DATE,

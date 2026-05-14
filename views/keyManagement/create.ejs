@@ -46,7 +46,7 @@
                     <div>Система контроля ключей<div class="company-name">ПАО «МТС»</div></div>
                 </a>
                 <div class="d-flex align-items-center gap-3">
-                    <span class="text-light"><i class="fas fa-user-circle"></i> <strong><%= user.username %></strong> <span class="badge bg-light text-dark ms-2"><%= user.role %></span></span>
+                     <span class="text-light"><i class="fas fa-user-circle"></i> <strong><%= user.fullName %></strong></span>
                     <form action="/logout" method="post" class="d-inline"><button type="submit" class="btn btn-outline-light btn-sm"><i class="fas fa-sign-out-alt"></i> Выйти</button></form>
                 </div>
             </div>
@@ -57,24 +57,15 @@
             <div class="col-md-2 mts-sidebar">
                 <ul class="sidebar-menu">
                     <li><a href="/keys/dashboard"><i class="fas fa-tachometer-alt"></i> Дашборд</a></li>
-                    <% if (user.role === 'Администратор') { %>
-                        <li><a href="/keys/issue"><i class="fas fa-sign-out-alt"></i> Выдача ключа</a></li>
-                        <li><a href="/keys/return"><i class="fas fa-sign-in-alt"></i> Возврат ключа</a></li>
-                    <% } %>
-                    <% if (user.role === 'Администратор' || user.role === 'Руководитель') { %>
-                        <li><a href="/keys/overdue"><i class="fas fa-exclamation-triangle"></i> Просроченные ключи</a></li>
-                        <li><a href="/keys/employee-history"><i class="fas fa-history"></i> История сотрудника</a></li>
-                    <% } %>
-                    <% if (user.role === 'Администратор') { %>
-                        <div class="sidebar-divider"></div>
-                        <div class="sidebar-title">Администрирование</div>
-                        <li><a href="/stations"><i class="fas fa-tower-cell"></i> Базовые станции</a></li>
-                        <li class="active"><a href="/keyManagement"><i class="fas fa-key"></i> Управление ключами</a></li>
-                        <li><a href="/users"><i class="fas fa-users"></i> Пользователи и роли</a></li>
-                    <% } %>
-                    <% if (user.role === 'Администратор' || user.role === 'Аудитор') { %>
-                        <li><a href="/audit"><i class="fas fa-clipboard-list"></i> Журнал аудита</a></li>
-                    <% } %>
+                    <li><a href="/keys/issue"><i class="fas fa-sign-out-alt"></i> Выдача ключа</a></li>
+                    <li><a href="/keys/return"><i class="fas fa-sign-in-alt"></i> Возврат ключа</a></li>
+                    <li><a href="/keys/overdue"><i class="fas fa-exclamation-triangle"></i> Просроченные ключи</a></li>
+                    <li><a href="/keys/employee-history"><i class="fas fa-history"></i> История сотрудника</a></li>
+                    <div class="sidebar-divider"></div>
+                    <div class="sidebar-title">Справочники</div>
+                    <li><a href="/stations"><i class="fas fa-tower-cell"></i> Базовые станции</a></li>
+                    <li><a href="/keyManagement"><i class="fas fa-key"></i> Управление ключами</a></li>
+                    <li><a href="/audit"><i class="fas fa-clipboard-list"></i> Журнал аудита</a></li>
                 </ul>
             </div>
             <div class="col-md-10">

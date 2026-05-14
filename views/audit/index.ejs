@@ -79,8 +79,7 @@
                     <div>Система контроля ключей<div class="company-name">ПАО «МТС»</div></div>
                 </a>
                 <div class="d-flex align-items-center gap-3">
-                    <span class="text-light"><i class="fas fa-user-circle"></i> <strong><%= user.username %></strong> <span class="badge bg-light text-dark ms-2"><%= user.role %></span></span>
-                    <form action="/logout" method="post" class="d-inline"><button type="submit" class="btn btn-outline-light btn-sm"><i class="fas fa-sign-out-alt"></i> Выйти</button></form>
+ <span class="text-light"><i class="fas fa-user-circle"></i> <strong><%= user.fullName %></strong></span>                    <form action="/logout" method="post" class="d-inline"><button type="submit" class="btn btn-outline-light btn-sm"><i class="fas fa-sign-out-alt"></i> Выйти</button></form>
                 </div>
             </div>
         </nav>
@@ -90,23 +89,15 @@
             <div class="col-md-2 mts-sidebar">
                 <ul class="sidebar-menu">
                     <li><a href="/keys/dashboard"><i class="fas fa-tachometer-alt"></i> Дашборд</a></li>
-                    <% if (user.role === 'Администратор') { %>
-                        <li><a href="/keys/issue"><i class="fas fa-sign-out-alt"></i> Выдача ключа</a></li>
-                        <li><a href="/keys/return"><i class="fas fa-sign-in-alt"></i> Возврат ключа</a></li>
-                    <% } %>
-                    <% if (user.role === 'Администратор' || user.role === 'Руководитель') { %>
-                        <li><a href="/keys/overdue"><i class="fas fa-exclamation-triangle"></i> Просроченные ключи</a></li>
-                        <li><a href="/keys/employee-history"><i class="fas fa-history"></i> История сотрудника</a></li>
-                    <% } %>
-                    <% if (user.role === 'Администратор') { %>
-                        <div class="sidebar-divider"></div>
-                        <div class="sidebar-title">Администрирование</div>
-                        <li><a href="/stations"><i class="fas fa-tower-cell"></i> Базовые станции</a></li>
-                        <li><a href="/users"><i class="fas fa-users"></i> Пользователи и роли</a></li>
-                    <% } %>
-                    <% if (user.role === 'Администратор' || user.role === 'Аудитор') { %>
-                        <li class="active"><a href="/audit"><i class="fas fa-clipboard-list"></i> Журнал аудита</a></li>
-                    <% } %>
+                    <li><a href="/keys/issue"><i class="fas fa-sign-out-alt"></i> Выдача ключа</a></li>
+                    <li><a href="/keys/return"><i class="fas fa-sign-in-alt"></i> Возврат ключа</a></li>
+                    <li><a href="/keys/overdue"><i class="fas fa-exclamation-triangle"></i> Просроченные ключи</a></li>
+                    <li><a href="/keys/employee-history"><i class="fas fa-history"></i> История сотрудника</a></li>
+                    <div class="sidebar-divider"></div>
+                    <div class="sidebar-title">Справочники</div>
+                    <li><a href="/stations"><i class="fas fa-tower-cell"></i> Базовые станции</a></li>
+                    <li><a href="/keyManagement"><i class="fas fa-key"></i> Управление ключами</a></li>
+                    <li class="active"><a href="/audit"><i class="fas fa-clipboard-list"></i> Журнал аудита</a></li>
                 </ul>
             </div>
             <div class="col-md-10">
@@ -115,33 +106,34 @@
                     
                     <div class="card filter-card">
                         <div class="card-body">
-                            <form method="get" class="row g-3">
-                                <div class="col-md-3">
-                                    <label class="form-label">Дата от</label>
-                                    <input type="date" name="from" class="form-control" value="<%= filters.from %>">
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-label">Дата до</label>
-                                    <input type="date" name="to" class="form-control" value="<%= filters.to %>">
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-label">Пользователь</label>
-                                    <input type="text" name="username" class="form-control" placeholder="Логин" value="<%= filters.username %>">
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-label">Тип операции</label>
-                                    <select name="operationType" class="form-select">
-                                        <option value="">Все</option>
-                                        <% operationTypes.forEach(function(type) { %>
-                                            <option value="<%= type %>" <%= filters.operationType === type ? 'selected' : '' %>><%= type %></option>
-                                        <% }); %>
-                                    </select>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-mts-primary">Применить фильтр</button>
-                                    <a href="/audit" class="btn btn-mts-secondary">Сбросить</a>
-                                </div>
-                            </form>
+                            <form method="get" action="/audit" class="row g-3">
+    <div class="col-md-3">
+        <label class="form-label">Дата от</label>
+        <input type="date" name="from" class="form-control" value="<%= filters.from %>">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Дата до</label>
+        <input type="date" name="to" class="form-control" value="<%= filters.to %>">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Пользователь</label>
+        <input type="text" name="username" class="form-control" placeholder="Логин" value="<%= filters.username %>">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Тип операции</label>
+        <select name="operationType" class="form-select">
+            <option value="">Все</option>
+            <% operationTypes.forEach(function(type) { %>
+                <option value="<%= type %>" <%= filters.operationType === type ? 'selected' : '' %>><%= type %></option>
+            <% }); %>
+        </select>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-mts-primary">Применить фильтр</button>
+        <a href="/audit" class="btn btn-mts-secondary">Сбросить</a>
+        <a href="/audit/export?<%= new URLSearchParams(filters).toString() %>" class="btn btn-mts-primary btn-sm float-end">Выгрузить в Excel</a>
+    </div>
+</form>
                         </div>
                     </div>
 
@@ -159,22 +151,22 @@
                                     <tbody>
                                         <% logs.forEach(function(log) { %>
                                             <tr>
-                                                <td><%= new Date(log.timestamp).toLocaleString() %></td>
-                                                <td><%= log.username %></td>
-                                                <td><%= log.ipAddress %></td>
+                                                <td><%= log.timestamp ? new Date(log.timestamp).toLocaleString() : '-' %></td>
+                                                <td><%= log.userFullName || log.username %></td>
+                                                <td><%= log.ipaddress || '-' %></td>
                                                 <td>
                                                     <span class="badge-audit 
-                                                        <%= log.operationType.includes('Выдача') ? 'operation-issue' : '' %>
-                                                        <%= log.operationType.includes('Возврат') ? 'operation-return' : '' %>
-                                                        <%= log.operationType.includes('Удаление') ? 'operation-delete' : '' %>
-                                                    "><%= log.operationType %></span>
+                                                        <%= log.operationtype && log.operationtype.includes('Выдача') ? 'operation-issue' : '' %>
+                                                        <%= log.operationtype && log.operationtype.includes('Возврат') ? 'operation-return' : '' %>
+                                                        <%= log.operationtype && log.operationtype.includes('Удаление') ? 'operation-delete' : '' %>
+                                                    "><%= log.operationtype || '-' %></span>
                                                 </td>
-                                                <td><%= log.objectId || '-' %></td>
+                                                <td><%= log.objectid || '-' %></td>
                                                 <td><%= log.details || '-' %></td>
                                             </tr>
                                         <% }); %>
                                         <% if (logs.length === 0) { %>
-                                            <tr><td colspan="6" class="text-center py-5">Нет записей</td></tr>
+                                            <td><td colspan="6" class="text-center py-5">Нет записей</td></tr>
                                         <% } %>
                                     </tbody>
                                 </table>

@@ -8,12 +8,15 @@ module.exports = (sequelize, DataTypes) => {
         username: {
             type: DataTypes.STRING,
             allowNull: false,
-            field: 'username'
+            unique: true
+        },
+        fullName: {
+            type: DataTypes.STRING,
+            allowNull: true
         },
         role: {
             type: DataTypes.STRING,
-            defaultValue: 'Инженер',
-            field: 'role'
+            defaultValue: 'Сотрудник'
         },
         createdAt: {
             type: DataTypes.DATE,
@@ -24,6 +27,5 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'user_roles',
         timestamps: false
     });
-
     return UserRole;
 };

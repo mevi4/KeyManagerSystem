@@ -1,4 +1,9 @@
-/* ---------- ШРИФТЫ МТС ---------- */
+/* Подключение шрифтов МТС */
+@font-face {
+    font-family: 'MTSWide';
+    src: url('/fonts/Wide/MTSWide-Bold.otf') format('opentype');
+    font-weight: 700;
+}
 @font-face {
     font-family: 'MTSCompact';
     src: url('/fonts/Compact/MTSCompact-Regular.otf') format('opentype');
@@ -10,52 +15,20 @@
     font-weight: 500;
 }
 @font-face {
-    font-family: 'MTSCompact';
-    src: url('/fonts/Compact/MTSCompact-Bold.otf') format('opentype');
-    font-weight: 700;
-}
-@font-face {
     font-family: 'MTSText';
     src: url('/fonts/Text/MTSText-Regular.otf') format('opentype');
     font-weight: 400;
 }
-@font-face {
-    font-family: 'MTSText';
-    src: url('/fonts/Text/MTSText-Medium.otf') format('opentype');
-    font-weight: 500;
-}
-@font-face {
-    font-family: 'MTSText';
-    src: url('/fonts/Text/MTSText-Bold.otf') format('opentype');
-    font-weight: 700;
-}
-@font-face {
-    font-family: 'MTSWide';
-    src: url('/fonts/Wide/MTSWide-Regular.otf') format('opentype');
-    font-weight: 400;
-}
-@font-face {
-    font-family: 'MTSWide';
-    src: url('/fonts/Wide/MTSWide-Medium.otf') format('opentype');
-    font-weight: 500;
-}
-@font-face {
-    font-family: 'MTSWide';
-    src: url('/fonts/Wide/MTSWide-Bold.otf') format('opentype');
-    font-weight: 700;
-}
 
-/* ---------- ПЕРЕМЕННЫЕ ---------- */
+/* Переменные МТС */
 :root {
-    --mts-red: #ff0032;
-    --mts-dark: #1d2023;
-    --mts-gray: #626c77;
-    --mts-bg: #f2f3f7;
-    --mts-white: #ffffff;
-    --text-primary: #1d2023;
-    --positive: #12b23f;
+    --color-brand-mts-red: #ff0032;
+    --color-text-primary: #1d2023;
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f2f3f7;
 }
 
+/* Общие стили */
 * {
     margin: 0;
     padding: 0;
@@ -64,16 +37,14 @@
 
 body {
     font-family: 'MTSText', 'Segoe UI', Arial, sans-serif;
-    background-color: var(--mts-bg);
-    color: var(--text-primary);
-    line-height: 1.5;
+    background-color: var(--color-background-secondary);
+    color: var(--color-text-primary);
 }
 
-/* ШАПКА МТС */
+/* Шапка МТС */
 .mts-header {
-    background-color: var(--mts-dark);
+    background-color: #1d2023;
     padding: 0.8rem 2rem;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 .mts-header .navbar-brand {
@@ -94,14 +65,13 @@ body {
 
 .company-name {
     font-size: 12px;
-    color: var(--mts-red);
+    color: var(--color-brand-mts-red);
     font-family: 'MTSCompact', sans-serif;
-    margin-top: 2px;
 }
 
-/* САЙДБАР */
+/* Сайдбар */
 .mts-sidebar {
-    background: var(--mts-dark);
+    background: #1d2023;
     min-height: calc(100vh - 70px);
     padding: 25px 0;
 }
@@ -124,7 +94,6 @@ body {
     font-family: 'MTSCompact', sans-serif;
     font-size: 14px;
     font-weight: 500;
-    transition: all 0.2s;
 }
 
 .sidebar-menu a:hover {
@@ -133,7 +102,7 @@ body {
 }
 
 .sidebar-menu .active a {
-    background: var(--mts-red);
+    background: var(--color-brand-mts-red);
     color: white;
 }
 
@@ -152,7 +121,7 @@ body {
     letter-spacing: 1px;
 }
 
-/* КОНТЕНТ */
+/* Основной контент */
 .mts-content {
     padding: 25px 30px;
 }
@@ -161,106 +130,73 @@ body {
     font-family: 'MTSWide', sans-serif;
     font-weight: 700;
     font-size: 28px;
-    color: var(--text-primary);
+    color: var(--color-text-primary);
     margin-bottom: 20px;
     padding-bottom: 15px;
-    border-bottom: 3px solid var(--mts-red);
+    border-bottom: 3px solid var(--color-brand-mts-red);
     display: inline-block;
 }
 
-/* КАРТОЧКИ */
+/* Карточки */
 .mts-card {
-    background: var(--mts-white);
+    background: var(--color-background-primary);
     border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     border: none;
     margin-bottom: 20px;
-    overflow: hidden;
 }
 
 .mts-card .card-header {
-    background: var(--mts-white);
+    background: var(--color-background-primary);
     border-bottom: 1px solid #e9ecef;
     padding: 18px 24px;
     font-family: 'MTSWide', sans-serif;
     font-weight: 600;
     font-size: 18px;
-    color: var(--text-primary);
+    border-radius: 16px 16px 0 0;
 }
 
-.mts-card .card-body {
-    padding: 20px 24px;
-}
-
-/* КНОПКИ */
+/* Кнопки */
 .btn-mts-primary {
-    background: var(--mts-red);
+    background: var(--color-brand-mts-red);
     border: none;
     color: white;
     padding: 8px 24px;
     border-radius: 8px;
     font-family: 'MTSCompact', sans-serif;
     font-weight: 500;
-    transition: all 0.2s;
 }
 
 .btn-mts-primary:hover {
     background: #cc0028;
-    transform: translateY(-1px);
 }
 
 .btn-mts-secondary {
     background: transparent;
-    border: 1px solid var(--mts-gray);
-    color: var(--mts-gray);
-    padding: 8px 24px;
-    border-radius: 8px;
+    border: 1px solid var(--color-brand-mts-red);
+    color: var(--color-brand-mts-red);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 12px;
     font-family: 'MTSCompact', sans-serif;
-    transition: all 0.2s;
 }
 
 .btn-mts-secondary:hover {
-    border-color: var(--mts-red);
-    color: var(--mts-red);
-}
-
-.btn-mts-danger {
-    background: transparent;
-    border: 1px solid var(--mts-red);
-    color: var(--mts-red);
-    padding: 4px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-family: 'MTSCompact', sans-serif;
-    transition: all 0.2s;
-}
-
-.btn-mts-danger:hover {
-    background: var(--mts-red);
+    background: var(--color-brand-mts-red);
     color: white;
 }
 
-.btn-mts-warning {
-    background: transparent;
-    border: 1px solid #ffc107;
-    color: #ffc107;
-    padding: 4px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-family: 'MTSCompact', sans-serif;
-}
-
-/* ТАБЛИЦЫ */
+/* Таблицы */
 .mts-table {
     width: 100%;
     border-collapse: collapse;
-    background: var(--mts-white);
+    background: white;
     border-radius: 12px;
     overflow: hidden;
 }
 
 .mts-table thead tr {
-    background: var(--mts-bg);
+    background: #f8f9fa;
 }
 
 .mts-table th {
@@ -269,8 +205,8 @@ body {
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: var(--mts-gray);
-    border-bottom: 2px solid var(--mts-red);
+    color: var(--color-text-primary);
+    border-bottom: 2px solid var(--color-brand-mts-red);
     padding: 16px;
     text-align: left;
 }
@@ -281,114 +217,27 @@ body {
     vertical-align: middle;
 }
 
-/* СТАТУСЫ */
+/* Статусы */
 .status-active {
-    color: var(--positive);
+    color: #12b23f;
     font-weight: 600;
 }
 
 .status-overdue {
-    color: var(--mts-red);
+    color: var(--color-brand-mts-red);
     font-weight: 600;
 }
 
-/* УВЕДОМЛЕНИЯ */
+/* Уведомления */
 .alert-mts {
     background: #fff0f2;
-    border-left: 4px solid var(--mts-red);
+    border-left: 4px solid var(--color-brand-mts-red);
     border-radius: 8px;
     padding: 12px 20px;
     margin-bottom: 20px;
 }
 
-/* ФИЛЬТРЫ */
-.filter-card {
-    background: var(--mts-white);
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    margin-bottom: 24px;
-    border: none;
-}
-
-.filter-card .card-body {
-    padding: 20px 24px;
-}
-
-/* ФОРМЫ */
-.form-control, .form-select {
-    border-radius: 8px;
-    border: 1px solid #d0d5dd;
-    padding: 10px 14px;
-    font-family: 'MTSText', sans-serif;
-}
-
-.form-control:focus, .form-select:focus {
-    border-color: var(--mts-red);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255,0,50,0.1);
-}
-
-/* БЕЙДЖИ ДЛЯ АУДИТА */
-.badge-audit {
-    background-color: #f0f2f5;
-    color: #1d2023;
-    padding: 4px 12px;
-    border-radius: 30px;
-    font-size: 12px;
-    font-family: 'MTSCompact', sans-serif;
-    display: inline-block;
-}
-
-.badge-audit.operation-issue {
-    background-color: #e6f7e6;
-    color: #12b23f;
-}
-
-.badge-audit.operation-return {
-    background-color: #e3f2fd;
-    color: #0070e5;
-}
-
-.badge-audit.operation-delete {
-    background-color: #fee;
-    color: #d8400c;
-}
-
-/* ОБЩИЕ УТИЛИТЫ */
-.text-center {
-    text-align: center;
-}
-
-.text-muted {
-    color: var(--mts-gray);
-}
-
-.py-5 {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-}
-
-.mb-3 {
-    margin-bottom: 1rem;
-}
-
-.mb-4 {
-    margin-bottom: 1.5rem;
-}
-
-.mt-2 {
-    margin-top: 0.5rem;
-}
-
-.w-100 {
-    width: 100%;
-}
-
-.float-end {
-    float: right;
-}
-
-/* Скрыть все иконки Font Awesome */
+/* Скрыть иконки Font Awesome (оставить только логотип) */
 .fa, .fas, .far, .fab, i[class*="fa-"] {
     display: none !important;
 }
